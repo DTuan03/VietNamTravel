@@ -80,7 +80,7 @@
                 android:inputType="text"
                 android:textColorHint="#A09B9B"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.483"
+                app:layout_constraintHorizontal_bias="0.485"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
                 tools:ignore="LabelFor,SpeakableTextPresentCheck, Autofill" />
