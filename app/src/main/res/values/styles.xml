@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Existing styles -->
+    <style name="BottomNavigationViewItemStyle">
+        <item name="android:paddingTop">2dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+
+    <style name="activity_home_theme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:statusBarColor">#FF5722</item>
+    </style>
+
+    <style name="BoldTabText" parent="TextAppearance.Design.Tab">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>

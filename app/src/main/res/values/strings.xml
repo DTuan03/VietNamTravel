@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">VietTravel</string>
+    <string name="activity_main_dang_ky">Đăng ký</string>
+    <string name="quay_lai">Quay lại</string>
+
+    <!-- Activity Regis   -->
+    <string name="activity_regis_regis">Đăng ký</string>
+    <string name="activity_regis_full_name">Tên đầy đủ</string>
+    <string name="activity_regis_phone">Số điện thoại</string>
+    <string name="activity_regis_pass">Mật khẩu</string>
+    <string name="activity_regis_confirm_pass">Nhập lại mật khẩu</string>
+    <string name="activity_regis_rules">Bằng việc nhấn nút Đăng ký, Quý khách đã đồng ý với các điều kiện và điều khoản của VietNam Travel</string>
+    <string name="activity_regis_or">Hoặc là</string>
+
+    <!-- Activity Login-->
+    <string name="activity_login_login">Đăng nhập</string>
+    <string name="activity_login_forgot_pass">Quên mật khẩu</string>
+    <string name="activity_login_facebook">Đăng nhập bằng Facebook</string>
+    <string name="activity_login_gooogle">Đăng nhập bằng Google</string>
+    <string name="activity_login_phone">Số điện thoại</string>
+    <string name="activity_login_pass">Mật khẩu</string>
+    <string name="activity_login_or">Hoặc là</string>
+
+    <!-- Fragment Logout-->
+    <string name="fragment_logout_title">Bạn có chắc muốn đăng xuất?</string>
+    <string name="fragment_logout_content">Khi đăng xuất, bạn sẽ không thấy thông tin cá nhân của bạn, bao gồm các chuyến đi. Xem thông tin vui lòng đăng nhập lại.</string>
+    <string name="fragment_logout_huy">Hủy</string>
+    <string name="fragment_logout_xac_nhan">Xác nhận</string>
+
+    <!-- Fragemnt Setting   -->
+    <string name="fragment_setting_cai_dat">Cài đặt</string>
+    <string name="fragment_setting_ten_nguoi_dung">Tên người dùng</string>
+    <string name="fragment_setting_ma_uu_dai">Mã ưu đãi</string>
+    <string name="fragment_setting_the">Thẻ</string>
+    <string name="fragment_setting_qua_tang">Quà tặng</string>
+    <string name="fragment_setting_thong_tin_tai_khoan">Thông tin tài khoản</string>
+    <string name="fragment_setting_mat_khau">Mật khẩu và bảo mật</string>
+    <string name="fragment_setting_the_cua_toi">Thẻ của tôi</string>
+    <string name="fragment_setting_danh_gia">Đánh giá</string>
+    <string name="fragment_setting_trung_tam_ho_tro">Trung tâm hỗ trợ</string>
+    <string name="fragment_setting_ma_giam_gia">Mã giảm giá của tôi</string>
+    <string name="fragment_setting_dang_xuat">Đăng xuất</string>
+
+
+    <!--Replace password-->
+    <string name="activity_replace_password">Thay đổi mật khẩu</string>
+    <string name="activity_replace_now">Mật khẩu hiện tại</string>
+    <string name="activity_replace_new">Mật khẩu mới</string>
+    <string name="activity_replace_cf_new">Nhập lại mật khẩu mới</string>
+    <string name="activity_replace_xac_nhan">Xác nhận</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "988687440430",
+    "project_id": "studious-tape-415209",
+    "storage_bucket": "studious-tape-415209.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988687440430:android:289b198fdd273f9e111dbf",
+        "android_client_info": {
+          "package_name": "com.httt.viettravel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuY-7TH6csfJQxz6GBGFwGSh12E42Wcs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:988687440430:android:bcb627ddefb91e69111dbf",
+        "android_client_info": {
+          "package_name": "com.httt1.vietnamtravel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuY-7TH6csfJQxz6GBGFwGSh12E42Wcs8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

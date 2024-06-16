@@ -1,0 +1,6 @@
+<!-- res/drawable/circle_shape.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#00000000"/> <!-- Điều này đặt màu của hình tròn là trong suốt, bạn có thể thay đổi màu theo ý muốn -->
+    <stroke android:width="2dp" android:color="#FF5722"/> <!-- Điều này đặt viền màu trắng cho hình tròn, bạn có thể chỉnh sửa chiều rộng và màu sắc -->
+</shape>

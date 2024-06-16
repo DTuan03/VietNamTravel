@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="activity_setting_icon">-15dp</dimen>
+    <dimen name="activity_setting_text_top">18dp</dimen>
+    <dimen name="activity_setting_icon_left">10dp</dimen>
+    <dimen name="activity_setting_icon_next_right">10dp</dimen>
+    <dimen name="activity_setting_icon_next_top">-2dp</dimen>
+    <dimen name="item_combo">5dp</dimen>
+
+</resources>

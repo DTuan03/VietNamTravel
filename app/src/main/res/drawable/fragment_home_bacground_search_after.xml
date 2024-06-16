@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- res/drawable/border.xml -->
+    <solid android:color="#E4E3E4"/> <!-- Màu nền (transparent) -->
+    <stroke
+        android:width="0dp"
+        android:color="#D7D2D2" />
+    <corners
+        android:radius="100dp" /> <!-- Bo góc của viền -->
+</shape>

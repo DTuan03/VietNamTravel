@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="tvXam">#666666</color>
+
+    <color name="regis_before">#D9D9D9</color>
+    <color name="regis_after">#2D96E0</color>
+    <color name="regis_error">#FF0000</color>
+    <color name="fragment_huy">#E6EDF3F3</color>
+    <color name="setting_tv">#999696</color>
+
+    <color name="fragment_home_rcv_combo">#99F3EFEF</color>
+
+
+<!--    Mau cua status bar fragment_home trong activity_home-->
+    <color name="fragment_home_status_bar">#ff7300</color>
+    <!--    Mau cua status bar fragment_setting trong activity_home-->
+    <color name="fragment_setting_status_bar">#67ced9</color>
+
+<!--    Mau cua replace PassWork-->
+    <color name="replace_activity_btn">#FF5722</color>
+
+</resources>
