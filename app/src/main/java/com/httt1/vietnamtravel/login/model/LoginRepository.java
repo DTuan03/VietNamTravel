@@ -1,15 +1,13 @@
 package com.httt1.vietnamtravel.login.model;
 
-import com.httt1.vietnamtravel.database.SQLServerDataSource;
+import com.httt1.vietnamtravel.common.database.SQLServerDataSource;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class LoginRepository {
     private final SQLServerDataSource sqlServerDataSource;

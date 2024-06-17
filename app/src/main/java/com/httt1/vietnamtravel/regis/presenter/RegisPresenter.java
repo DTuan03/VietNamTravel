@@ -1,14 +1,18 @@
 package com.httt1.vietnamtravel.regis.presenter;
 
+import android.content.Intent;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.httt1.vietnamtravel.R;
+import com.httt1.vietnamtravel.login.view.LoginActivity;
 import com.httt1.vietnamtravel.regis.model.RegisModel;
 import com.httt1.vietnamtravel.regis.model.RegisRepository;
+import com.httt1.vietnamtravel.regis.view.RegisActivity;
 
 public class RegisPresenter implements RegisContract.Presenter{
     private final RegisContract.View view;
@@ -71,9 +75,19 @@ public class RegisPresenter implements RegisContract.Presenter{
     @Override
     public void onClickRegis() {
         if (onTextChanged()){
-            RegisModel regisModel = new RegisModel(view.getFullName(),view.getPhone(), view.getPassword());
-            regisRepository.User(regisModel);
-            view.toLoginActivity();
+            regisRepository.CheckUser(view.getPhone(), new RegisRepository.CheckUserCallBack() {
+                @Override
+                public void onCheckUser(boolean success) {
+                    if (success){
+                        view.checkUser();
+                    }
+                    else {
+                        RegisModel regisModel = new RegisModel(view.getFullName(),view.getPhone(), view.getPassword());
+                        regisRepository.User(regisModel);
+                        view.toLoginActivity();
+                    }
+                }
+            });
         }
     }
 }

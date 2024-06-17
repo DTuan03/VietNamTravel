@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.text.TextWatcher;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -149,5 +150,15 @@ public class RegisActivity extends AppCompatActivity implements RegisContract.Vi
         Intent intent = new Intent(RegisActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+    @Override
+    public void checkUser() {
+        //Vi truy van dang o luong phu nen view.checkUser been Presenter cung o luong phu, ma Toast phai o luong chinh nen phai dua ve luong chinh truoc
+        RegisActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(RegisActivity.this, "Đã có tài khoản tồn tại", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

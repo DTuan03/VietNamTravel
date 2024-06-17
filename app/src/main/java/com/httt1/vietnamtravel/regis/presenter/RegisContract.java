@@ -13,6 +13,7 @@ public interface RegisContract {
         String getPassword();
         String getConfirmPassword();
         void toLoginActivity();
+        void checkUser();
     }
 
     interface Presenter{

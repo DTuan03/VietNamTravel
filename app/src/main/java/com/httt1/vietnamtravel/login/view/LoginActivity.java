@@ -1,5 +1,6 @@
 package com.httt1.vietnamtravel.login.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -19,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.httt1.vietnamtravel.R;
 import com.httt1.vietnamtravel.login.presenter.LoginContract;
 import com.httt1.vietnamtravel.login.presenter.LoginPresenter;
+import com.httt1.vietnamtravel.regis.view.RegisActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
     private EditText etPhone, etPass;
@@ -49,6 +51,13 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             @Override
             public void onClick(View v) {
                 loginPresenter.onClickLogin();
+            }
+        });
+
+        tvRegis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                toRegisActivity();
             }
         });
     }
@@ -106,5 +115,12 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     @Override
     public void setLoginButtonColor(int color) {
         btnLogin.setBackgroundColor(getResources().getColor(color));
+    }
+
+    @Override
+    public void toRegisActivity() {
+        Intent intent = new Intent(LoginActivity.this, RegisActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

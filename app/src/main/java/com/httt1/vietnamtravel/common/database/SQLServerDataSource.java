@@ -1,4 +1,4 @@
-package com.httt1.vietnamtravel.database;
+package com.httt1.vietnamtravel.common.database;
 
 import android.util.Log;
 

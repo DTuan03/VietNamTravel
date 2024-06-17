@@ -9,6 +9,7 @@ public interface LoginContract {
         String getPass();
         void enableLoginButton(boolean enable);
         void setLoginButtonColor(int color);
+        void toRegisActivity();
     }
 
     interface Presenter{
