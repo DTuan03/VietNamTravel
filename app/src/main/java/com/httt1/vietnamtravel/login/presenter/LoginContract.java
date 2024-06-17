@@ -10,6 +10,7 @@ public interface LoginContract {
         void enableLoginButton(boolean enable);
         void setLoginButtonColor(int color);
         void toRegisActivity();
+        void checkUser();
     }
 
     interface Presenter{

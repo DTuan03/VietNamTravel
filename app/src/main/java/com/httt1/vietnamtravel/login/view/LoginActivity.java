@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -122,5 +123,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
         Intent intent = new Intent(LoginActivity.this, RegisActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void checkUser() {
+        //Vi truy van dang o luong phu nen view.checkUser been Presenter cung o luong phu, ma Toast phai o luong chinh nen phai dua ve luong chinh truoc
+        LoginActivity.this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(LoginActivity.this, "Kiểm tra lại tài khoản và mật khẩu", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 }

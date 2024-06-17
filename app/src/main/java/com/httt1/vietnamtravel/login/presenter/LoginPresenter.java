@@ -70,12 +70,10 @@ public class LoginPresenter implements LoginContract.Presenter{
                             @Override
                             public void getUserId(String key, String value) {
                                 sharedPrefsHelper.putString(key, value);
-                                Log.v(key, value);
                             }
                         });
-                        Log.d("Dang Nhap", "Dang nhap thanh cong");
                     }else{
-                        Log.d("Dang nhap", "That bai");
+                        view.checkUser();
                     }
                 }
             });

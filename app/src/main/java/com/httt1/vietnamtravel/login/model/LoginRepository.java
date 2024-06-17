@@ -63,8 +63,6 @@ public class LoginRepository {
                         String key = "User" + userId;
                         callBack.getUserId(key, userId);
                     } else {
-                        // Không tìm thấy người dùng
-                        callBack.getUserId("", "");
                         Log.d("Khong", "Khong tim thay nguoi dung");
                     }
                 }catch (SQLException e){
