@@ -5,17 +5,21 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.content.Context;
 
 import com.httt1.vietnamtravel.R;
+import com.httt1.vietnamtravel.common.utils.SharedPrefsHelper;
 import com.httt1.vietnamtravel.login.model.LoginModel;
 import com.httt1.vietnamtravel.login.model.LoginRepository;
 
 public class LoginPresenter implements LoginContract.Presenter{
     private final LoginContract.View view;
     private final LoginRepository loginRepositor;
-    public LoginPresenter(LoginContract.View view) {
+    private final SharedPrefsHelper sharedPrefsHelper;
+    public LoginPresenter(LoginContract.View view, Context context) {
         this.view = view;
         this.loginRepositor = new LoginRepository();
+        this.sharedPrefsHelper = new SharedPrefsHelper(context);
     }
 
     @Override
@@ -59,9 +63,17 @@ public class LoginPresenter implements LoginContract.Presenter{
             LoginModel loginModel = new LoginModel(view.getPhone(), view.getPass());
             loginRepositor.login(loginModel, new LoginRepository.LoginCallBack() {
                 @Override
-                public void onResult(boolean success) {
+                public void checkUser(boolean success) {
                     if (success){
-                        Log.d("Dang Nhap", "Dang nhapo thanh cong");
+                        LoginModel user = new LoginModel(view.getPhone());
+                        loginRepositor.getUserId(user, new LoginRepository.UserIdCallBack() {
+                            @Override
+                            public void getUserId(String key, String value) {
+                                sharedPrefsHelper.putString(key, value);
+                                Log.v(key, value);
+                            }
+                        });
+                        Log.d("Dang Nhap", "Dang nhap thanh cong");
                     }else{
                         Log.d("Dang nhap", "That bai");
                     }

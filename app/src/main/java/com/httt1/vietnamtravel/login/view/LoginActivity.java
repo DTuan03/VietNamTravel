@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
             return insets;
         });
         init();
-        loginPresenter = new LoginPresenter(this);
+        loginPresenter = new LoginPresenter(this, this);
         ivEyeHidden.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

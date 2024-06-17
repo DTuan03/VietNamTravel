@@ -9,6 +9,10 @@ public class LoginModel {
         this.pass = pass;
     }
 
+    public LoginModel(String phone) {
+        this.phone = phone;
+    }
+
     public String getPhone() {
         return phone;
     }
