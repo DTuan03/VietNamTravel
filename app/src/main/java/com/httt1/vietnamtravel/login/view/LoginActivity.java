@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.httt1.vietnamtravel.R;
 import com.httt1.vietnamtravel.login.presenter.LoginContract;
 import com.httt1.vietnamtravel.login.presenter.LoginPresenter;
+import com.httt1.vietnamtravel.main.view.MainActivity;
 import com.httt1.vietnamtravel.regis.view.RegisActivity;
 
 public class LoginActivity extends AppCompatActivity implements LoginContract.View {
@@ -134,5 +135,16 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
                 Toast.makeText(LoginActivity.this, "Kiểm tra lại tài khoản và mật khẩu", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    public void toMainActivity(String keyBudle, String valueBudle) {
+        Log.d(keyBudle, valueBudle);
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(keyBudle, valueBudle);
+        intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
     }
 }

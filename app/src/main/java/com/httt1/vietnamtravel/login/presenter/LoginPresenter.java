@@ -1,5 +1,6 @@
 package com.httt1.vietnamtravel.login.presenter;
 
+import android.content.Intent;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
@@ -60,18 +61,23 @@ public class LoginPresenter implements LoginContract.Presenter{
     @Override
     public void onClickLogin() {
         if (onTextChanged()){
-            LoginModel loginModel = new LoginModel(view.getPhone(), view.getPass());
-            loginRepositor.login(loginModel, new LoginRepository.LoginCallBack() {
+            LoginModel user = new LoginModel(view.getPhone(), view.getPass());
+            loginRepositor.login(user, new LoginRepository.LoginCallBack() {
                 @Override
                 public void checkUser(boolean success) {
                     if (success){
                         LoginModel user = new LoginModel(view.getPhone());
-                        loginRepositor.getUserId(user, new LoginRepository.UserIdCallBack() {
-                            @Override
-                            public void getUserId(String key, String value) {
-                                sharedPrefsHelper.putString(key, value);
-                            }
-                        });
+                        if (sharedPrefsHelper.getString(view.getPhone()) == null){
+                            loginRepositor.getUserId(user, new LoginRepository.UserIdCallBack() {
+                                @Override
+                                public void getUserId(String value) {
+                                    sharedPrefsHelper.putString(view.getPhone(), value);
+                                }
+                            });
+                        }
+                        else {
+                            view.toMainActivity("UserId", view.getPhone());
+                        }
                     }else{
                         view.checkUser();
                     }

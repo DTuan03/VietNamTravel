@@ -18,8 +18,8 @@ public class SharedPrefsHelper {
     }
 
     //Lay thong tin dang nhap
-    public String getString(String key, String defualtValue){
-        return sharedPreferences.getString(key, defualtValue);
+    public String getString(String key){
+        return sharedPreferences.getString(key, null);
     }
 
     //Xoa thong tin dang nhap
