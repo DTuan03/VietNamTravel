@@ -138,12 +138,8 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     }
 
     @Override
-    public void toMainActivity(String keyBudle, String valueBudle) {
-        Log.d(keyBudle, valueBudle);
+    public void toMainActivity() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putString(keyBudle, valueBudle);
-        intent.putExtras(bundle);
         startActivity(intent);
         finish();
     }

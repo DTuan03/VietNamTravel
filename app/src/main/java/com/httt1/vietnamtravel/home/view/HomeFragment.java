@@ -3,6 +3,8 @@ package com.httt1.vietnamtravel.home.view;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,9 +12,19 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.httt1.vietnamtravel.R;
+import com.httt1.vietnamtravel.common.utils.SharedPrefsHelper;
+import com.httt1.vietnamtravel.home.adapter.ComboAdapter;
+import com.httt1.vietnamtravel.home.model.HomeModel;
+import com.httt1.vietnamtravel.home.model.HomeRepository;
+import com.httt1.vietnamtravel.home.presenter.HomeContract;
+import com.httt1.vietnamtravel.home.presenter.HomePresenter;
 
-public class HomeFragment extends Fragment {
+import java.util.List;
 
+public class HomeFragment extends Fragment implements HomeContract.View {
+    private RecyclerView rcvCombo;
+    private ComboAdapter comboAdapter;
+    private HomePresenter homePresenter;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -43,11 +55,33 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Bundle bundle = getArguments();
-        if (bundle != null){
-            String userId = bundle.getString("UserId");
-//            Log.d("HomeFragmnet", userId);
-        }
+        SharedPrefsHelper sharedPrefsHelper = new SharedPrefsHelper(getContext());
+        String userId = sharedPrefsHelper.getString("UserId");
+        init(view);
+
+        comboAdapter = new ComboAdapter();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
+        rcvCombo.setLayoutManager(linearLayoutManager);
+        rcvCombo.setAdapter(comboAdapter);
+
+        homePresenter = new HomePresenter(this, getContext());
+        homePresenter.getData("CB");
+
         return view;
+    }
+    private void init(View view){
+        rcvCombo = view.findViewById(R.id.fragment_home_rcv_combo);
+    }
+
+    @Override
+    public void showData(List<HomeModel> list) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // Cập nhật dữ liệu vào adapter và RecyclerView
+                comboAdapter.setData(getContext(), list);
+                comboAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

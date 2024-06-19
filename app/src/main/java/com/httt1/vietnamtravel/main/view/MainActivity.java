@@ -61,21 +61,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void loadFragment(Fragment fragment){
-        getIntentData(fragment);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.activity_main_fragment_container, fragment);
         transaction.addToBackStack(null); // theem fragment vao ngan xep backstack de khi an quay lai no se quay lai
         transaction.commit();
-    }
-    private void getIntentData(Fragment fragment){
-        //nhan du lieu
-        Intent intent = getIntent();
-        if(intent != null){
-            String valueUserId = intent.getStringExtra("UserId");
-            //truyen du lieu den fragment
-            Bundle bundle = new Bundle();
-            bundle.putString("UserId", valueUserId);
-            fragment.setArguments(bundle);
-        }
     }
 }

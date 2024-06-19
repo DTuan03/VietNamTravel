@@ -15,11 +15,11 @@ import com.httt1.vietnamtravel.login.model.LoginRepository;
 
 public class LoginPresenter implements LoginContract.Presenter{
     private final LoginContract.View view;
-    private final LoginRepository loginRepositor;
+    private final LoginRepository loginRepository;
     private final SharedPrefsHelper sharedPrefsHelper;
     public LoginPresenter(LoginContract.View view, Context context) {
         this.view = view;
-        this.loginRepositor = new LoginRepository();
+        this.loginRepository = new LoginRepository();
         this.sharedPrefsHelper = new SharedPrefsHelper(context);
     }
 
@@ -43,12 +43,12 @@ public class LoginPresenter implements LoginContract.Presenter{
         if (isEmpty(view.getPhone()) || isEmpty(view.getPass()) ){
             boolean isVaild = false;
             view.enableLoginButton(isVaild);
-            view.setLoginButtonColor(isVaild ? R.color.regis_after : R.color.regis_before);
+            view.setLoginButtonColor(R.color.regis_before);
             return false;
         }else{
                 boolean isVaild = true;
                 view.enableLoginButton(isVaild);
-                view.setLoginButtonColor(isVaild ? R.color.regis_after : R.color.regis_before);
+                view.setLoginButtonColor(R.color.regis_after);
                 return true;
         }
     }
@@ -62,22 +62,18 @@ public class LoginPresenter implements LoginContract.Presenter{
     public void onClickLogin() {
         if (onTextChanged()){
             LoginModel user = new LoginModel(view.getPhone(), view.getPass());
-            loginRepositor.login(user, new LoginRepository.LoginCallBack() {
+            loginRepository.login(user, new LoginRepository.LoginCallBack() {
                 @Override
                 public void checkUser(boolean success) {
                     if (success){
                         LoginModel user = new LoginModel(view.getPhone());
-                        if (sharedPrefsHelper.getString(view.getPhone()) == null){
-                            loginRepositor.getUserId(user, new LoginRepository.UserIdCallBack() {
-                                @Override
-                                public void getUserId(String value) {
-                                    sharedPrefsHelper.putString(view.getPhone(), value);
-                                }
-                            });
-                        }
-                        else {
-                            view.toMainActivity("UserId", view.getPhone());
-                        }
+                        loginRepository.getUserId(user, new LoginRepository.UserIdCallBack() {
+                            @Override
+                            public void getUserId(String value) {
+                                sharedPrefsHelper.putString("UserId", value);
+                            }
+                        });
+                            view.toMainActivity();
                     }else{
                         view.checkUser();
                     }

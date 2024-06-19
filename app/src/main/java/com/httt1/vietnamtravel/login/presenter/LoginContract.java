@@ -11,7 +11,7 @@ public interface LoginContract {
         void setLoginButtonColor(int color);
         void toRegisActivity();
         void checkUser();
-        void toMainActivity(String keyBudle, String valueBudle);
+        void toMainActivity();
     }
 
     interface Presenter{
