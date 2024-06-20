@@ -1,5 +1,6 @@
 package com.httt1.vietnamtravel.home.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,7 +28,7 @@ import com.httt1.vietnamtravel.home.presenter.HomePresenter;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeContract.View {
-    private RecyclerView rcvCombo, rcvVoucher, rcvDiscover;
+    private RecyclerView rcvCombo, rcvVoucher;
     private ComboAdapter comboAdapter;
     private VoucherAdapter voucherAdapter;
     private HomePresenter homePresenter;
