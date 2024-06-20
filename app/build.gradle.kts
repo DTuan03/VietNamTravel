@@ -42,7 +42,7 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(files("jtds-1.3.1.jar")) //thu vien ho tro ket noi sql server
-    implementation("de.hdodenhof:circleimageview:3.1.0")
+    implementation("de.hdodenhof:circleimageview:3.1.0") //thư viện card view de bo ảnh
     implementation(platform("com.google.firebase:firebase-bom:33.1.0")) // thư viện firebase
     implementation("com.google.firebase:firebase-database") // thư viện firebase real time
     implementation ("com.google.firebase:firebase-storage") // thư viện firebase storage

@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface HomeContract {
     interface View{
-        void showData(List<HomeModel> list);
+        void showDataCombo(List<HomeModel> list);
+        void showDataVoucher(List<HomeModel> list);
     }
     interface Presenter{
-        void getData(String typeTour);
+        void getDataCombo(String typeTour);
+        void getDataVoucher();
     }
 }

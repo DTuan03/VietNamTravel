@@ -35,7 +35,6 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
     public void onBindViewHolder(@NonNull ComboViewHolder holder, int position) {
         HomeModel combo = listCombo.get(position);
         String uriImgCombo = combo.geturlImg();
-        Log.d("abc", uriImgCombo);
         String tvNameTour = combo.getnameTour();
         int tvPriceTour = combo.getPrice();
         if (combo != null){

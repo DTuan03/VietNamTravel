@@ -21,6 +21,11 @@ public class HomeModel {
         this.price = price;
     }
 
+    //Voucher
+    public HomeModel(String urlImg){
+        this.urlImg = urlImg;
+    }
+
     public String geturlImg() {
         return urlImg;
     }

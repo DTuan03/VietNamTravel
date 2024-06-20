@@ -314,18 +314,13 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <TextView
-                            android:id="@+id/textView40"
+                            android:id="@+id/textView6"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="5dp"
-                            android:text="Hiển thị nhiều hơn"
-                            android:textColor="@color/regis_after"
-                            android:textSize="13dp"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.936"
-                            app:layout_constraintStart_toEndOf="@+id/textView39"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:layout_marginStart="11dp"
+                            android:text="Nhấn vào đây, mã giảm tới tay, túi tiền sẽ nhảy! "
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/textView39" />
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <androidx.recyclerview.widget.RecyclerView

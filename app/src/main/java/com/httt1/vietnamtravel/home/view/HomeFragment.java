@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +13,8 @@ import android.view.ViewGroup;
 import com.httt1.vietnamtravel.R;
 import com.httt1.vietnamtravel.common.utils.SharedPrefsHelper;
 import com.httt1.vietnamtravel.home.adapter.ComboAdapter;
+import com.httt1.vietnamtravel.home.adapter.VoucherAdapter;
 import com.httt1.vietnamtravel.home.model.HomeModel;
-import com.httt1.vietnamtravel.home.model.HomeRepository;
 import com.httt1.vietnamtravel.home.presenter.HomeContract;
 import com.httt1.vietnamtravel.home.presenter.HomePresenter;
 
@@ -23,7 +22,9 @@ import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeContract.View {
     private RecyclerView rcvCombo;
+    private RecyclerView rcvVoucher;
     private ComboAdapter comboAdapter;
+    private VoucherAdapter voucherAdapter;
     private HomePresenter homePresenter;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -59,28 +60,52 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         String userId = sharedPrefsHelper.getString("UserId");
         init(view);
 
+        setComboAdapter();
+
+        setVoucherAdapter();
+
+        return view;
+    }
+    private void init(View view){
+        rcvCombo = view.findViewById(R.id.fragment_home_rcv_combo);
+        rcvVoucher = view.findViewById(R.id.fragment_home_rcv_voucher);
+    }
+    private void setComboAdapter(){
         comboAdapter = new ComboAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
         rcvCombo.setLayoutManager(linearLayoutManager);
         rcvCombo.setAdapter(comboAdapter);
 
         homePresenter = new HomePresenter(this, getContext());
-        homePresenter.getData("CB");
+        homePresenter.getDataCombo("CB");
 
-        return view;
-    }
-    private void init(View view){
-        rcvCombo = view.findViewById(R.id.fragment_home_rcv_combo);
+        homePresenter.getDataVoucher();
     }
 
     @Override
-    public void showData(List<HomeModel> list) {
+    public void showDataCombo(List<HomeModel> list) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // Cập nhật dữ liệu vào adapter và RecyclerView
                 comboAdapter.setData(getContext(), list);
                 comboAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+    private void setVoucherAdapter(){
+        voucherAdapter = new VoucherAdapter();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false);
+        rcvVoucher.setLayoutManager(linearLayoutManager);
+        rcvVoucher.setAdapter(voucherAdapter);
+    }
+    @Override
+    public void showDataVoucher(List<HomeModel> list) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                voucherAdapter.setData(getContext(), list);
+                voucherAdapter.notifyDataSetChanged();
             }
         });
     }
