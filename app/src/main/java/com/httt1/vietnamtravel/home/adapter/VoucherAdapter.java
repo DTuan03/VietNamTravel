@@ -18,7 +18,7 @@ import java.util.List;
 public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder> {
     List<HomeModel> listVoucher;
     Context context;
-    public void setData(Context context, List<HomeModel> listVoucher){
+    public void setDataVoucher(Context context, List<HomeModel> listVoucher){
         this.context = context;
         this.listVoucher = listVoucher;
     }

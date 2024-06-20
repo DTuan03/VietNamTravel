@@ -4,13 +4,13 @@ public class HomeModel {
     private String urlImg;
     private String nameTour;
     private int price;
-    private String numberStar;
+    private float avgrStar;
 
     //recomend
-    public HomeModel(String urlImg, String nameTour, String numberStar, int price) {
+    public HomeModel(String urlImg, String nameTour, float avgrStar, int price) {
         this.urlImg = urlImg;
         this.nameTour = nameTour;
-        this.numberStar = numberStar;
+        this.avgrStar = avgrStar;
         this.price = price;
     }
 
@@ -42,12 +42,11 @@ public class HomeModel {
         this.nameTour = nameTour;
     }
 
-    public String getNumberStar() {
-        return numberStar;
+    public float getavgrStar() {
+        return avgrStar;
     }
-
-    public void setNumberStar(String numberStar) {
-        this.numberStar = numberStar;
+    public void setavgrStar(float avgrStar) {
+        this.avgrStar = avgrStar;
     }
 
     public int getPrice() {

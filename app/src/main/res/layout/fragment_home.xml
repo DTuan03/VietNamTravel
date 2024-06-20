@@ -358,22 +358,22 @@
                     app:tabTextAppearance="@style/TextAppearance.AppCompat.Body1">
 
                     <com.google.android.material.tabs.TabItem
-                        android:id="@+id/fragment_home_tabItem_propose"
+                        android:id="@+id/fragment_home_tabItem_recommend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Đề xuất" />
 
                     <com.google.android.material.tabs.TabItem
-                        android:id="@+id/fragment_home_tabItem_khong_the_bo_lo"
+                        android:id="@+id/fragment_home_tabItem_no_missed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Không thể bỏ lỡ" />
 
                     <com.google.android.material.tabs.TabItem
-                        android:id="@+id/fragment_home_tabItem_cam_nang"
+                        android:id="@+id/fragment_home_tabItem_favorites"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cẩm nang du lịch" />
+                        android:text="Được yêu thích nhiều nhất" />
                 </com.google.android.material.tabs.TabLayout>
 
                 <androidx.viewpager2.widget.ViewPager2

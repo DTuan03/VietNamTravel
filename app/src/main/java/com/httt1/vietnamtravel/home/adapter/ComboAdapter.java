@@ -20,7 +20,7 @@ import java.util.List;
 public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHolder> {
     private List<HomeModel> listCombo;
     private Context context;
-    public void setData(Context context, List<HomeModel> listCombo){
+    public void setDataCombo(Context context, List<HomeModel> listCombo){
         this.context = context;
         this.listCombo = listCombo;
     }

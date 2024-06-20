@@ -37,4 +37,15 @@ public class HomePresenter implements HomeContract.Presenter {
             }
         });
     }
+
+    @Override
+    public void getDataDiscover(String typeDiscover) {
+        homeRepository.getDiscover(typeDiscover, new HomeRepository.DiscoverCallBack() {
+            @Override
+            public void listDiscover(List<HomeModel> listDiscover) {
+                list = listDiscover;
+                view.showDataDiscover(list);
+            }
+        });
+    }
 }

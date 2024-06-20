@@ -21,6 +21,7 @@ public class HomeRepository {
         this.sqlServerDataSource = new SQLServerDataSource();
         this.executorService = Executors.newSingleThreadExecutor();
     }
+
     public interface ComboCallBack{
         void listCombo(List<HomeModel> listCombo);
     }
@@ -62,6 +63,7 @@ public class HomeRepository {
         return tours;
     }
 
+
     public interface VoucherCallBack{
         void listVoucher(List<HomeModel> listVoucher);
     }
@@ -87,7 +89,6 @@ public class HomeRepository {
             }
         });
     }
-
     private List<HomeModel> setListVoucher(ResultSet resultSet) throws SQLException {
         List<HomeModel> vouchers = new ArrayList<>();
         while (resultSet.next()) {
@@ -97,5 +98,60 @@ public class HomeRepository {
             vouchers.add(voucher);
         }
         return vouchers;
+    }
+
+    public interface DiscoverCallBack{
+        void listDiscover(List<HomeModel> listDiscover);
+    }
+    public void getDiscover(String typeDiscover, DiscoverCallBack discoverCallBack){
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                String query;
+                if(typeDiscover.equals("recommend")){
+                    query = "SELECT Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour, ROUND(AVG(CAST(Feedback.Rating AS FLOAT)),1) AS AvgRating " +
+                            "FROM Tour " +
+                            "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
+                            "INNER JOIN BookedTour ON Tour.TourId = BookedTour.TourId " +
+                            "INNER JOIN Feedback ON Feedback.BookedTourId = BookedTour.BookedTourId " +
+                            "WHERE Tour.Recommend = 1 AND ImgTour.ImgPosition = 1 " +
+                            "GROUP BY Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour";
+                }
+                else {
+                    query = "SELECT Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour, ROUND(AVG(CAST(Feedback.Rating AS FLOAT)),1) AS AvgRating " +
+                            "FROM Tour " +
+                            "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
+                            "INNER JOIN BookedTour ON Tour.TourId = BookedTour.TourId " +
+                            "INNER JOIN Feedback ON Feedback.BookedTourId = BookedTour.BookedTourId " +
+                            "WHERE Tour.NotMissed = 1 AND ImgTour.ImgPosition = 1 " +
+                            "GROUP BY Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour";
+                }
+                try (
+                        Connection connection = sqlServerDataSource.getConnection();
+                        PreparedStatement statement = connection.prepareStatement(query);
+                ){
+                    ResultSet resultSet = statement.executeQuery();
+                    List<HomeModel> discovers = setListDiscover(resultSet);
+                    discoverCallBack.listDiscover(discovers);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private List<HomeModel> setListDiscover(ResultSet resultSet) throws SQLException{
+        List<HomeModel> discovers = new ArrayList<>();
+        while (resultSet.next()){
+            String discoverId = resultSet.getString("TourId");
+            String nameTour = resultSet.getString("NameTour");
+            String imgResource = resultSet.getString("ImgResource");
+            int price = resultSet.getInt("PriceTour");
+            float avgRating = resultSet.getFloat("AvgRating");
+            Log.d("SAO", "SAO DANH GIA " + avgRating);
+            HomeModel discover = new HomeModel(imgResource, nameTour, avgRating, price);
+            discovers.add(discover);
+        }
+        return discovers;
     }
 }
