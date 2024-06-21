@@ -34,6 +34,7 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
     @Override
     public void onBindViewHolder(@NonNull ComboViewHolder holder, int position) {
         HomeModel combo = listCombo.get(position);
+        String tourId = combo.gettourId();
         String uriImgCombo = combo.geturlImg();
         String tvNameTour = combo.getnameTour();
         int tvPriceTour = combo.getPrice();
@@ -42,6 +43,10 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
             Picasso.with(context).load(uriImgCombo).error(R.drawable.hue5).into(holder.image);
             holder.tvNameToure.setText(tvNameTour);
             holder.tvPriceToure.setText(String.valueOf(tvPriceTour));
+            if(combo.getIsFavorite() != 0){
+                holder.imgFav.setImageResource(R.mipmap.icon_favorite_color);
+                Log.d("ABCDCUDBHCFUDH", "HUIEHFDIEHFIEHFIEFH" + combo.getIsFavorite());
+            }
         }
     }
 
@@ -57,11 +62,13 @@ public class ComboAdapter extends RecyclerView.Adapter<ComboAdapter.ComboViewHol
         private ImageView image;
         private TextView tvNameToure;
         private TextView tvPriceToure;
+        private ImageView imgFav;
         public ComboViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.item_combo_img);
             tvNameToure = itemView.findViewById(R.id.item_combo_tv_name_tour);
             tvPriceToure = itemView.findViewById(R.id.item_combo_price_tour);
+            imgFav = itemView.findViewById(R.id.item_combo_img_favorite);
         }
     }
 

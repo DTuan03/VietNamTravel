@@ -45,7 +45,7 @@ public class LoginRepository {
     }
 
     public interface UserIdCallBack{
-        void getUserId(String value);
+        void getUserId(int value);
     }
     public void getUserId(LoginModel user, UserIdCallBack callBack){
         executorService.execute(new Runnable() {
@@ -59,7 +59,7 @@ public class LoginRepository {
                     statement.setString(1, user.getPhone());
                     ResultSet resultSet = statement.executeQuery();
                     if (resultSet.next()) {
-                        String userId = resultSet.getString("UserId");
+                        int userId = resultSet.getInt("UserId");
                         callBack.getUserId(userId);
                     } else {
                         Log.d("Khong", "Khong tim thay nguoi dung");

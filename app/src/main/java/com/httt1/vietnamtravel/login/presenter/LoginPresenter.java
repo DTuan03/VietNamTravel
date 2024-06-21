@@ -46,10 +46,10 @@ public class LoginPresenter implements LoginContract.Presenter{
             view.setLoginButtonColor(R.color.regis_before);
             return false;
         }else{
-                boolean isVaild = true;
-                view.enableLoginButton(isVaild);
-                view.setLoginButtonColor(R.color.regis_after);
-                return true;
+            boolean isVaild = true;
+            view.enableLoginButton(isVaild);
+            view.setLoginButtonColor(R.color.regis_after);
+            return true;
         }
     }
 
@@ -69,8 +69,8 @@ public class LoginPresenter implements LoginContract.Presenter{
                         LoginModel user = new LoginModel(view.getPhone());
                         loginRepository.getUserId(user, new LoginRepository.UserIdCallBack() {
                             @Override
-                            public void getUserId(String value) {
-                                sharedPrefsHelper.putString("UserId", value);
+                            public void getUserId(int value) {
+                                sharedPrefsHelper.putInt("UserId", value);
                             }
                         });
                             view.toMainActivity();

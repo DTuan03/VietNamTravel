@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void loadFragment(Fragment fragment){
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.activity_main_fragment_container, fragment);
-        transaction.addToBackStack(null); // theem fragment vao ngan xep backstack de khi an quay lai no se quay lai
+        transaction.addToBackStack(null); // them fragment vao ngan xep backstack de khi an quay lai no se quay lai
         transaction.commit();
     }
 }

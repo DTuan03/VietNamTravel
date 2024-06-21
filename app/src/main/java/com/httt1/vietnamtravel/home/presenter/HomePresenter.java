@@ -17,14 +17,24 @@ public class HomePresenter implements HomeContract.Presenter {
         this.homeRepository = new HomeRepository();
     }
     @Override
-    public void getDataCombo(String typeTour) {
-        homeRepository.getTour(typeTour, new HomeRepository.ComboCallBack() {
-            @Override
-            public void listCombo(List<HomeModel> listCombo) {
-                list = listCombo;
-                view.showDataCombo(list); // Cập nhật view với danh sách mới
-            }
-        });
+    public void getDataCombo(String typeTour, int userId) {
+        if(userId == 0){ // vi ben reponsitory da thiet lap neu kh co ai thi tra ve 0
+            homeRepository.getTour(typeTour, new HomeRepository.ComboCallBack() {
+                @Override
+                public void listCombo(List<HomeModel> listCombo) {
+                    list = listCombo;
+                    view.showDataCombo(list); // Cập nhật view với danh sách mới
+                }
+            });
+        }else{
+            homeRepository.checkFavoriteTour(userId, new HomeRepository.FavoriteCallBack() {
+                @Override
+                public void listCombo(List<HomeModel> listFavoriteTour) {
+                    list = listFavoriteTour;
+                    view.showDataCombo(list);
+                }
+            });
+        }
     }
 
     @Override

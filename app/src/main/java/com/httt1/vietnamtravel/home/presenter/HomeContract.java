@@ -11,7 +11,7 @@ public interface HomeContract {
         void showDataDiscover(List<HomeModel> list);
     }
     interface Presenter{
-        void getDataCombo(String typeTour);
+        void getDataCombo(String typeTour, int userId);
         void getDataVoucher();
         void getDataDiscover(String typeDiscover);
     }

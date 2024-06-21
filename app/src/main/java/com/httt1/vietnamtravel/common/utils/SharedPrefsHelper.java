@@ -11,16 +11,16 @@ public class SharedPrefsHelper {
     }
 
     //Luu thong tin dang nhap
-    public void putString(String key, String value){
+    public void putInt(String key, int value){
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(key, value);
+        editor.putInt(key, value);
         editor.apply();
     }
 
     //Lay thong tin dang nhap
-    public String getString(String key){
-        return sharedPreferences.getString(key, null);
-    }
+    public int getInt(String key){
+        return sharedPreferences.getInt(key, 0);
+    } // kh co gi mac dinh tra ve 0
 
     //Xoa thong tin dang nhap
     public void removeString(String key){

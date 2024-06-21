@@ -97,20 +97,18 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
 
     @Override
     public String getPhone() {
-        Log.d("ET phone", etPhone.getText().toString());
+//        Log.d("ET phone", etPhone.getText().toString());
         return etPhone.getText().toString();
     }
 
     @Override
     public String getPass() {
-        Log.d("ET Pass", etPass.getText().toString());
+//        Log.d("ET Pass", etPass.getText().toString());
         return etPass.getText().toString();
     }
 
     @Override
     public void enableLoginButton(boolean enable) {
-        if(enable){
-            Log.d("Set enal" , "co vao");}
         btnLogin.setEnabled(enable);
     }
 

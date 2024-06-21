@@ -70,7 +70,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/item_combo_favorite"
+            android:id="@+id/item_combo_img_favorite"
             android:layout_width="70dp"
             android:layout_height="83dp"
             android:layout_gravity="end"

@@ -42,7 +42,7 @@ public class HomeRepository {
                     // Ham tạo danh sách để chứa kết quả ben duoi
                     List<HomeModel> tours = setListTour(resultSet);
                     comboCallBack.listCombo(tours);
-                    Log.d("So luong", "So luong " + tours.size());
+                    Log.d("fbhfdiubhviujdvbhjudvhndfju", "juhfuidshfuijdshfuijrde  " + tours.size());
                 }catch (SQLException e){
                     e.printStackTrace();
                     comboCallBack.listCombo(new ArrayList<>()); // Trả về danh sách rỗng trong trường hợp lỗi
@@ -57,7 +57,7 @@ public class HomeRepository {
             String nameTour = resultSet.getString("NameTour");
             int priceTour = resultSet.getInt("PriceTour");
             String imgUrl = resultSet.getString("ImgResource");
-            HomeModel tour = new HomeModel(imgUrl, nameTour, priceTour);
+            HomeModel tour = new HomeModel(tourId, imgUrl, nameTour, priceTour);
             tours.add(tour);
         }
         return tours;
@@ -153,5 +153,49 @@ public class HomeRepository {
             discovers.add(discover);
         }
         return discovers;
+    }
+
+    public interface FavoriteCallBack{
+        void listCombo(List<HomeModel> listFavoriteTour);
+    }
+
+    public void checkFavoriteTour(int userId, FavoriteCallBack favoriteCallBack){
+        executorService.execute(new Runnable() {
+            @Override
+            public void run() {
+                String query = "SELECT Tour.TourId, Tour.TypeTour, Tour.NameTour, Tour.PriceTour, ImgTour.ImgResource, " +
+                        "CASE WHEN FavTour.UserId = ? THEN 1 ELSE 0 END AS IsFavorite " +
+                        "FROM Tour " +
+                        "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
+                        "LEFT JOIN FavTour ON Tour.TourId = FavTour.TourId AND FavTour.UserId = ? " +
+                        "WHERE ImgTour.ImgPosition = 1 AND Tour.TypeTour = 'CB'";
+                try(
+                        Connection connection = sqlServerDataSource.getConnection();
+                        PreparedStatement statement = connection.prepareStatement(query)
+                        ){
+                        statement.setInt(1, userId);
+                        statement.setInt(2, userId);
+                        ResultSet resultSet = statement.executeQuery();
+                        List<HomeModel> list = setDataFavorite(resultSet);
+                        favoriteCallBack.listCombo(list);
+                        Log.d("So luong tour: ", "la la la la la al ala la a: " + list.size());
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+    private List<HomeModel> setDataFavorite(ResultSet resultSet) throws SQLException{
+        List<HomeModel> favorites = new ArrayList<>();
+        while (resultSet.next()){
+            String tourId = resultSet.getString("TourId");
+            String nameTour = resultSet.getString("NameTour");
+            int priceTour = resultSet.getInt("PriceTour");
+            String imgUrl = resultSet.getString("ImgResource");
+            int isFavorite = resultSet.getInt("IsFavorite");
+            HomeModel favorite = new HomeModel(tourId, imgUrl, nameTour, priceTour, isFavorite);
+            favorites.add(favorite);
+        }
+        return favorites;
     }
 }
