@@ -23,22 +23,15 @@ public class HomeModel {
         this.tourId = tourId;
     }
     //recomend
-    public HomeModel(String urlImg, String nameTour, float avgrStar, int price) {
+    public HomeModel(String urlImg, String nameTour, float avgrStar, int price, int isFavorite) {
         this.urlImg = urlImg;
         this.nameTour = nameTour;
         this.avgrStar = avgrStar;
         this.price = price;
+        this.isFavorite = isFavorite;
     }
 
-    //combo not user
-    public HomeModel(String TourId, String urlImg, String nameTour, int price) {
-        this.tourId = TourId;
-        this.urlImg = urlImg;
-        this.nameTour = nameTour;
-        this.price = price;
-    }
-
-    //combo co user
+    //combo
     public HomeModel(String TourId, String urlImg, String nameTour, int price, int isFavorite) {
         this.tourId = TourId;
         this.urlImg = urlImg;

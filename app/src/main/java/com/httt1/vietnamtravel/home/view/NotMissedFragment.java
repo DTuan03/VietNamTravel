@@ -6,11 +6,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.httt1.vietnamtravel.R;
+import com.httt1.vietnamtravel.common.utils.SharedPrefsHelper;
 import com.httt1.vietnamtravel.home.adapter.DiscoverAdapter;
 import com.httt1.vietnamtravel.home.model.HomeModel;
 import com.httt1.vietnamtravel.home.presenter.HomeContract;
@@ -54,10 +56,14 @@ public class NotMissedFragment extends Fragment implements HomeContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_not_missed, container, false);
+        SharedPrefsHelper sharedPrefsHelper = new SharedPrefsHelper(requireContext()); //requireContext tuong tu getContext() nhung neu null no se tra ra loi...
+        int userId = sharedPrefsHelper.getInt("UserId");
+        Log.d("Thong tin UserId 18:03", "Thong tin: " + userId);
+
         init(view);
         homePresenter = new HomePresenter(this, getContext());
 
-        setDiscoverAdapter(homePresenter);
+        setDiscoverAdapter(homePresenter, userId);
         return view;
     }
     private void init(View view){
@@ -74,14 +80,14 @@ public class NotMissedFragment extends Fragment implements HomeContract.View {
 
     }
 
-    private void setDiscoverAdapter(HomePresenter homePresenter){
+    private void setDiscoverAdapter(HomePresenter homePresenter, int userId){
         discoverAdapter = new DiscoverAdapter();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rcvNotMissed.setLayoutManager(gridLayoutManager);
         rcvNotMissed.setAdapter(discoverAdapter);
 
-        homePresenter.getDataDiscover("noMissed");
+        homePresenter.getDataDiscover("noMissed", userId);
     }
     @Override
     public void showDataDiscover(List<HomeModel> list) {

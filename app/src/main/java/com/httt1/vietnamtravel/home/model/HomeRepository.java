@@ -21,48 +21,92 @@ public class HomeRepository {
         this.sqlServerDataSource = new SQLServerDataSource();
         this.executorService = Executors.newSingleThreadExecutor();
     }
+    //Hiển thị tour combo khi khách vãng lai hoac co tai khoan, neu vang lai thu userId may tra ra la 0 con co thi userId la khac 0 và câu lệnh
+    // dưới có thể hiển thị cả 2
+//    public interface ComboCallBack{
+//        void listCombo(List<HomeModel> listCombo);
+//    }
+//    public void getTour(String typeTour,ComboCallBack comboCallBack){
+//        executorService.execute(new Runnable() {
+//            @Override
+//            public void run() {
+//                String query = "SELECT Tour.TourId, Tour.NameTour, Tour.PriceTour, ImgTour.ImgResource " +
+//                        "FROM Tour " +
+//                        "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
+//                        "WHERE Tour.TypeTour = ? " + "AND ImgTour.ImgPosition = 1";
+//                try(
+//                        Connection connection = sqlServerDataSource.getConnection();
+//                        PreparedStatement statement = connection.prepareStatement(query);
+//                ) {
+//                    statement.setString(1, typeTour);
+//                    ResultSet resultSet = statement.executeQuery();
+//                    // Ham tạo danh sách để chứa kết quả ben duoi
+//                    List<HomeModel> tours = setListTour(resultSet);
+//                    comboCallBack.listCombo(tours);
+//                    Log.d("fbhfdiubhviujdvbhjudvhndfju", "juhfuidshfuijdshfuijrde  " + tours.size());
+//                }catch (SQLException e){
+//                    e.printStackTrace();
+//                    comboCallBack.listCombo(new ArrayList<>()); // Trả về danh sách rỗng trong trường hợp lỗi
+//                }
+//            }
+//        });
+//    }
+//    private List<HomeModel> setListTour(ResultSet resultSet) throws SQLException {
+//        List<HomeModel> tours = new ArrayList<>();
+//        while (resultSet.next()) {
+//            String tourId = resultSet.getString("TourId");
+//            String nameTour = resultSet.getString("NameTour");
+//            int priceTour = resultSet.getInt("PriceTour");
+//            String imgUrl = resultSet.getString("ImgResource");
+//            HomeModel tour = new HomeModel(tourId, imgUrl, nameTour, priceTour);
+//            tours.add(tour);
+//        }
+//        return tours;
+//    }
 
     public interface ComboCallBack{
-        void listCombo(List<HomeModel> listCombo);
+        void listCombo(List<HomeModel> listComboTour);
     }
-    public void getTour(String typeTour,ComboCallBack comboCallBack){
+
+    public void getComboTour(int userId, ComboCallBack comboCallBack){
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                String query = "SELECT Tour.TourId, Tour.NameTour, Tour.PriceTour, ImgTour.ImgResource " +
+                String query = "SELECT Tour.TourId, Tour.TypeTour, Tour.NameTour, Tour.PriceTour, ImgTour.ImgResource, " +
+                        "CASE WHEN FavTour.UserId = ? THEN 1 ELSE 0 END AS IsFavorite " +
                         "FROM Tour " +
                         "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
-                        "WHERE Tour.TypeTour = ? " + "AND ImgTour.ImgPosition = 1";
+                        "LEFT JOIN FavTour ON Tour.TourId = FavTour.TourId AND FavTour.UserId = ? " +
+                        "WHERE ImgTour.ImgPosition = 1 AND Tour.TypeTour = 'CB'";
                 try(
                         Connection connection = sqlServerDataSource.getConnection();
-                        PreparedStatement statement = connection.prepareStatement(query);
-                ) {
-                    statement.setString(1, typeTour);
+                        PreparedStatement statement = connection.prepareStatement(query)
+                ){
+                    statement.setInt(1, userId);
+                    statement.setInt(2, userId);
                     ResultSet resultSet = statement.executeQuery();
-                    // Ham tạo danh sách để chứa kết quả ben duoi
-                    List<HomeModel> tours = setListTour(resultSet);
-                    comboCallBack.listCombo(tours);
-                    Log.d("fbhfdiubhviujdvbhjudvhndfju", "juhfuidshfuijdshfuijrde  " + tours.size());
-                }catch (SQLException e){
+                    List<HomeModel> list = setDataCombo(resultSet);
+                    comboCallBack.listCombo(list);
+                    Log.d("So luong tour: ", "So luong tour yeu thich: " + list.size());
+                }catch (Exception e){
                     e.printStackTrace();
-                    comboCallBack.listCombo(new ArrayList<>()); // Trả về danh sách rỗng trong trường hợp lỗi
                 }
             }
         });
     }
-    private List<HomeModel> setListTour(ResultSet resultSet) throws SQLException {
-        List<HomeModel> tours = new ArrayList<>();
-        while (resultSet.next()) {
+    private List<HomeModel> setDataCombo(ResultSet resultSet) throws SQLException{
+        List<HomeModel> combos = new ArrayList<>();
+        while (resultSet.next()){
             String tourId = resultSet.getString("TourId");
             String nameTour = resultSet.getString("NameTour");
             int priceTour = resultSet.getInt("PriceTour");
             String imgUrl = resultSet.getString("ImgResource");
-            HomeModel tour = new HomeModel(tourId, imgUrl, nameTour, priceTour);
-            tours.add(tour);
+            int isFavorite = resultSet.getInt("IsFavorite");
+            HomeModel combo = new HomeModel(tourId, imgUrl, nameTour, priceTour, isFavorite);
+            combos.add(combo);
         }
-        return tours;
+        return combos;
     }
-
 
     public interface VoucherCallBack{
         void listVoucher(List<HomeModel> listVoucher);
@@ -103,33 +147,49 @@ public class HomeRepository {
     public interface DiscoverCallBack{
         void listDiscover(List<HomeModel> listDiscover);
     }
-    public void getDiscover(String typeDiscover, DiscoverCallBack discoverCallBack){
+    public void getDiscover(int userId, String typeDiscover, DiscoverCallBack discoverCallBack){
         executorService.execute(new Runnable() {
             @Override
             public void run() {
                 String query;
                 if(typeDiscover.equals("recommend")){
-                    query = "SELECT Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour, ROUND(AVG(CAST(Feedback.Rating AS FLOAT)),1) AS AvgRating " +
+                    query = "SELECT Tour.TourId, Tour.NameTour, Tour.PriceTour, ImgTour.ImgResource, ROUND(AVG(CAST(Feedback.Rating AS FLOAT)), 1) AS AvgRating, " +
+                            "CASE WHEN FavTour.UserId = ? THEN 1 ELSE 0 END AS IsFavorite " +
                             "FROM Tour " +
                             "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
                             "INNER JOIN BookedTour ON Tour.TourId = BookedTour.TourId " +
                             "INNER JOIN Feedback ON Feedback.BookedTourId = BookedTour.BookedTourId " +
-                            "WHERE Tour.Recommend = 1 AND ImgTour.ImgPosition = 1 " +
-                            "GROUP BY Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour";
+                            "LEFT JOIN FavTour ON Tour.TourId = FavTour.TourId AND FavTour.UserId = ? " +
+                            "WHERE ImgTour.ImgPosition = 1 AND Tour.Recommend = 1 " +
+                            "GROUP BY " +
+                                " Tour.TourId, " +
+                                " Tour.NameTour, " +
+                                " ImgTour.ImgResource, " +
+                                " Tour.PriceTour, " +
+                                " FavTour.UserId;";
                 }
                 else {
-                    query = "SELECT Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour, ROUND(AVG(CAST(Feedback.Rating AS FLOAT)),1) AS AvgRating " +
+                    query = "SELECT Tour.TourId, Tour.NameTour, Tour.PriceTour, ImgTour.ImgResource, ROUND(AVG(CAST(Feedback.Rating AS FLOAT)), 1) AS AvgRating, " +
+                            "CASE WHEN FavTour.UserId = ? THEN 1 ELSE 0 END AS IsFavorite " +
                             "FROM Tour " +
                             "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
                             "INNER JOIN BookedTour ON Tour.TourId = BookedTour.TourId " +
                             "INNER JOIN Feedback ON Feedback.BookedTourId = BookedTour.BookedTourId " +
-                            "WHERE Tour.NotMissed = 1 AND ImgTour.ImgPosition = 1 " +
-                            "GROUP BY Tour.TourId, Tour.NameTour, ImgTour.ImgResource, Tour.PriceTour";
+                            "LEFT JOIN FavTour ON Tour.TourId = FavTour.TourId AND FavTour.UserId = ? " +
+                            "WHERE ImgTour.ImgPosition = 1 AND Tour.NotMissed = 1 " +
+                            "GROUP BY " +
+                            " Tour.TourId, " +
+                            " Tour.NameTour, " +
+                            " ImgTour.ImgResource, " +
+                            " Tour.PriceTour, " +
+                            " FavTour.UserId;";
                 }
                 try (
                         Connection connection = sqlServerDataSource.getConnection();
                         PreparedStatement statement = connection.prepareStatement(query);
                 ){
+                    statement.setInt(1, userId);
+                    statement.setInt(2, userId);
                     ResultSet resultSet = statement.executeQuery();
                     List<HomeModel> discovers = setListDiscover(resultSet);
                     discoverCallBack.listDiscover(discovers);
@@ -148,54 +208,12 @@ public class HomeRepository {
             String imgResource = resultSet.getString("ImgResource");
             int price = resultSet.getInt("PriceTour");
             float avgRating = resultSet.getFloat("AvgRating");
-            Log.d("SAO", "SAO DANH GIA " + avgRating);
-            HomeModel discover = new HomeModel(imgResource, nameTour, avgRating, price);
+            int isFavorite = resultSet.getInt("IsFavorite");
+//            Log.d("SAO", "SAO DANH GIA " + avgRating);
+            HomeModel discover = new HomeModel(imgResource, nameTour, avgRating, price, isFavorite);
             discovers.add(discover);
         }
         return discovers;
     }
 
-    public interface FavoriteCallBack{
-        void listCombo(List<HomeModel> listFavoriteTour);
-    }
-
-    public void checkFavoriteTour(int userId, FavoriteCallBack favoriteCallBack){
-        executorService.execute(new Runnable() {
-            @Override
-            public void run() {
-                String query = "SELECT Tour.TourId, Tour.TypeTour, Tour.NameTour, Tour.PriceTour, ImgTour.ImgResource, " +
-                        "CASE WHEN FavTour.UserId = ? THEN 1 ELSE 0 END AS IsFavorite " +
-                        "FROM Tour " +
-                        "INNER JOIN ImgTour ON Tour.TourId = ImgTour.TourId " +
-                        "LEFT JOIN FavTour ON Tour.TourId = FavTour.TourId AND FavTour.UserId = ? " +
-                        "WHERE ImgTour.ImgPosition = 1 AND Tour.TypeTour = 'CB'";
-                try(
-                        Connection connection = sqlServerDataSource.getConnection();
-                        PreparedStatement statement = connection.prepareStatement(query)
-                        ){
-                        statement.setInt(1, userId);
-                        statement.setInt(2, userId);
-                        ResultSet resultSet = statement.executeQuery();
-                        List<HomeModel> list = setDataFavorite(resultSet);
-                        favoriteCallBack.listCombo(list);
-                        Log.d("So luong tour: ", "la la la la la al ala la a: " + list.size());
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    private List<HomeModel> setDataFavorite(ResultSet resultSet) throws SQLException{
-        List<HomeModel> favorites = new ArrayList<>();
-        while (resultSet.next()){
-            String tourId = resultSet.getString("TourId");
-            String nameTour = resultSet.getString("NameTour");
-            int priceTour = resultSet.getInt("PriceTour");
-            String imgUrl = resultSet.getString("ImgResource");
-            int isFavorite = resultSet.getInt("IsFavorite");
-            HomeModel favorite = new HomeModel(tourId, imgUrl, nameTour, priceTour, isFavorite);
-            favorites.add(favorite);
-        }
-        return favorites;
-    }
 }

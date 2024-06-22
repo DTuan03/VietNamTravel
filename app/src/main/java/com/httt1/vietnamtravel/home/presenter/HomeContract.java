@@ -13,6 +13,6 @@ public interface HomeContract {
     interface Presenter{
         void getDataCombo(String typeTour, int userId);
         void getDataVoucher();
-        void getDataDiscover(String typeDiscover);
+        void getDataDiscover(String typeDiscover, int userId);
     }
 }

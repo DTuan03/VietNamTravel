@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class SQLServerDataSource {
 
-    private static final String connecString = "jdbc:jtds:sqlserver://192.168.1.9:1433;databasename=viettravel;user=sa;password=Tuan12082003@";
+    private static final String connecString = "jdbc:jtds:sqlserver://localhost:1433;databasename=viettravel;user=sa;password=Tuan12082003@";
     public Connection getConnection() throws SQLException {
         Connection connection = null;
         try {

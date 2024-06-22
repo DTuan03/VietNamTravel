@@ -65,17 +65,18 @@
                     android:text="840,000"
                     android:textColor="@color/black"
                     android:textSize="13dp" />
+
             </LinearLayout>
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/item_combo_img_favorite"
-            android:layout_width="70dp"
+            android:layout_width="60dp"
             android:layout_height="83dp"
             android:layout_gravity="end"
             android:layout_marginTop="-25dp"
-            android:layout_marginEnd="-20dp"
+            android:layout_marginEnd="-12dp"
             app:srcCompat="@mipmap/activity_home_favorite" />
 
     </FrameLayout>

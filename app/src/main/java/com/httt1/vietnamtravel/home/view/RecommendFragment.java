@@ -7,11 +7,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.httt1.vietnamtravel.R;
+import com.httt1.vietnamtravel.common.utils.SharedPrefsHelper;
 import com.httt1.vietnamtravel.home.adapter.DiscoverAdapter;
 import com.httt1.vietnamtravel.home.model.HomeModel;
 import com.httt1.vietnamtravel.home.presenter.HomeContract;
@@ -55,10 +57,15 @@ public class RecommendFragment extends Fragment implements HomeContract.View {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recommend, container, false);
+
+        SharedPrefsHelper sharedPrefsHelper = new SharedPrefsHelper(requireContext()); //requireContext tuong tu getContext() nhung neu null no se tra ra loi...
+        int userId = sharedPrefsHelper.getInt("UserId");
+        Log.d("Thong tin UserId 18:03", "Thong tin: " + userId);
+
         rcvRecommend = view.findViewById(R.id.fragment_recommend_rcv);
         homePresenter = new HomePresenter(this, getContext());
 
-        setDiscoverAdapter(homePresenter);
+        setDiscoverAdapter(homePresenter, userId);
 
         return view;
     }
@@ -73,14 +80,14 @@ public class RecommendFragment extends Fragment implements HomeContract.View {
 
     }
 
-    private void setDiscoverAdapter(HomePresenter homePresenter){
+    private void setDiscoverAdapter(HomePresenter homePresenter, int userId){
         discoverAdapter = new DiscoverAdapter();
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         rcvRecommend.setLayoutManager(gridLayoutManager);
         rcvRecommend.setAdapter(discoverAdapter);
 
-        homePresenter.getDataDiscover("recommend");
+        homePresenter.getDataDiscover("recommend", userId);
     }
 
     @Override
